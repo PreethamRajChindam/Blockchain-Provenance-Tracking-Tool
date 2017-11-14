@@ -64,28 +64,33 @@ App = {
         ci = instance;
         return ci.getActor(account);
       }).then(function(data) {
-        App.productDatabase = data[2];
-        var type="";
-        switch(data[0].e){
-          case 0:
-            type="Manufacturer";
-            break;
-          case 1: 
-            type="Shipper";
-            break;
-          case 2: 
-            type="Distributor";
-            break;
-          case 3: 
-            type="Retailer";
-            break;
+          App.productDatabase = data[2];
+          if (App.productDatabase !== "0x0000000000000000000000000000000000000000") {
+          var type="";
+          switch(data[0].e){
+            case 0:
+              type="Manufacturer";
+              break;
+            case 1: 
+              type="Shipper";
+              break;
+            case 2: 
+              type="Distributor";
+              break;
+            case 3: 
+              type="Retailer";
+              break;
+            default: 
+              type="";
+          }
         }
+        console.log(data[2]);
         if (type !== undefined) {
           $("#welcome-message").text("Welcome " + data[1] + "!, you are registered as " + type + ".");
         }
         App.getProducts();
       }).catch(function(err) {
-        console.log(err.message);
+        console.log("this the error", err.message);
       });
     });
   },
