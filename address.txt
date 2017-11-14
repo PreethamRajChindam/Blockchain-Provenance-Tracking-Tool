@@ -1,0 +1,10 @@
+ProductDatabase
+0x7a37b2e81Fa72E756D77FfB2F302d7031482E90c
+abi
+[{"constant":false,"inputs":[{"name":"_productRef","type":"address"}],"name":"addProduct","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"inputs":[],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"payable":false,"stateMutability":"nonpayable","type":"fallback"}]
+
+SupplyChainRegistry
+0x94F3c283FeF50cA3641152814772D5C72D53F2a5
+
+ProductFactory
+0x245f254b3aab47bc2d0fdfec826339748fd3297b

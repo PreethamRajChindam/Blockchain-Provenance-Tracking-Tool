@@ -1,0 +1,1403 @@
+{
+  "contractName": "SupplyChainRegistry",
+  "abi": [
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "getActor",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        },
+        {
+          "name": "",
+          "type": "string"
+        },
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "getActorType",
+      "outputs": [
+        {
+          "name": "",
+          "type": "uint8"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "constant": false,
+      "inputs": [
+        {
+          "name": "_type",
+          "type": "uint8"
+        },
+        {
+          "name": "_name",
+          "type": "string"
+        }
+      ],
+      "name": "registerActor",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "constant": true,
+      "inputs": [
+        {
+          "name": "_address",
+          "type": "address"
+        }
+      ],
+      "name": "getActorDatabase",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ],
+  "bytecode": "0x6060604052341561000f57600080fd5b610a618061001e6000396000f300606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634138d167146100675780639ee677ed14610161578063e501392f146101bc578063f99ba86214610225575b600080fd5b341561007257600080fd5b61009e600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061029e565b604051808460038111156100ae57fe5b60ff168152602001806020018373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001828103825284818151815260200191508051906020019080838360005b83811015610124578082015181840152602081019050610109565b50505050905090810190601f1680156101515780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b341561016c57600080fd5b610198600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610445565b604051808260038111156101a857fe5b60ff16815260200191505060405180910390f35b34156101c757600080fd5b610223600480803560ff1690602001909190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190505061049d565b005b341561023057600080fd5b61025c600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506105cf565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60006102a861063a565b60008060008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900460ff166000808673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206001016000808773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16818054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104315780601f1061040657610100808354040283529160200191610431565b820191906000526020600020905b81548152906001019060200180831161041457829003601f168201915b505050505091509250925092509193909250565b60008060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900460ff169050919050565b60006104a761064e565b604051809103906000f08015156104bd57600080fd5b90506060604051908101604052808460038111156104d757fe5b81526020018381526020018273ffffffffffffffffffffffffffffffffffffffff168152506000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008201518160000160006101000a81548160ff0219169083600381111561055e57fe5b0217905550602082015181600101908051906020019061057f92919061065e565b5060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550905050505050565b60008060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b602060405190810160405280600081525090565b6040516103328061070483390190565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061069f57805160ff19168380011785556106cd565b828001600101855582156106cd579182015b828111156106cc5782518255916020019190600101906106b1565b5b5090506106da91906106de565b5090565b61070091905b808211156106fc5760008160009055506001016106e4565b5090565b9056006060604052341561000f57600080fd5b6103148061001e6000396000f300606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680637acc0b2014610067578063a87d942c146100ca578063f44a6ca9146100f3575b341561006257600080fd5b600080fd5b341561007257600080fd5b610088600480803590602001909190505061012c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100d557600080fd5b6100dd61016b565b6040518082815260200191505060405180910390f35b34156100fe57600080fd5b61012a600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610177565b005b60008181548110151561013b57fe5b90600052602060002090016000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60008080549050905090565b600160008273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16156101ce57600080fd5b600080548060010182816101e29190610297565b9160005260206000209001600083909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550507f32ce9bb6ac5aefe4253f61c408ef10c74d8218c4454d01068b550e90022f3fbe81604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a150565b8154818355818115116102be578183600052602060002091820191016102bd91906102c3565b5b505050565b6102e591905b808211156102e15760008160009055506001016102c9565b5090565b905600a165627a7a723058201fa859d5c83f436d15b8995b1e3b48730b1c851be7b81f56824a9849bd4ffb470029a165627a7a72305820173487d2abab0d9afb82b7aa72fcec010685ffc19b903f0ad77cb3faa10bff880029",
+  "deployedBytecode": "0x606060405260043610610062576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680634138d167146100675780639ee677ed14610161578063e501392f146101bc578063f99ba86214610225575b600080fd5b341561007257600080fd5b61009e600480803573ffffffffffffffffffffffffffffffffffffffff1690602001909190505061029e565b604051808460038111156100ae57fe5b60ff168152602001806020018373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff168152602001828103825284818151815260200191508051906020019080838360005b83811015610124578082015181840152602081019050610109565b50505050905090810190601f1680156101515780820380516001836020036101000a031916815260200191505b5094505050505060405180910390f35b341561016c57600080fd5b610198600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610445565b604051808260038111156101a857fe5b60ff16815260200191505060405180910390f35b34156101c757600080fd5b610223600480803560ff1690602001909190803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284378201915050505050509190505061049d565b005b341561023057600080fd5b61025c600480803573ffffffffffffffffffffffffffffffffffffffff169060200190919050506105cf565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b60006102a861063a565b60008060008573ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900460ff166000808673ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff1681526020019081526020016000206001016000808773ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff16818054600181600116156101000203166002900480601f0160208091040260200160405190810160405280929190818152602001828054600181600116156101000203166002900480156104315780601f1061040657610100808354040283529160200191610431565b820191906000526020600020905b81548152906001019060200180831161041457829003601f168201915b505050505091509250925092509193909250565b60008060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060000160009054906101000a900460ff169050919050565b60006104a761064e565b604051809103906000f08015156104bd57600080fd5b90506060604051908101604052808460038111156104d757fe5b81526020018381526020018273ffffffffffffffffffffffffffffffffffffffff168152506000803373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060008201518160000160006101000a81548160ff0219169083600381111561055e57fe5b0217905550602082015181600101908051906020019061057f92919061065e565b5060408201518160020160006101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550905050505050565b60008060008373ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060020160009054906101000a900473ffffffffffffffffffffffffffffffffffffffff169050919050565b602060405190810160405280600081525090565b6040516103328061070483390190565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061069f57805160ff19168380011785556106cd565b828001600101855582156106cd579182015b828111156106cc5782518255916020019190600101906106b1565b5b5090506106da91906106de565b5090565b61070091905b808211156106fc5760008160009055506001016106e4565b5090565b9056006060604052341561000f57600080fd5b6103148061001e6000396000f300606060405260043610610057576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680637acc0b2014610067578063a87d942c146100ca578063f44a6ca9146100f3575b341561006257600080fd5b600080fd5b341561007257600080fd5b610088600480803590602001909190505061012c565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34156100d557600080fd5b6100dd61016b565b6040518082815260200191505060405180910390f35b34156100fe57600080fd5b61012a600480803573ffffffffffffffffffffffffffffffffffffffff16906020019091905050610177565b005b60008181548110151561013b57fe5b90600052602060002090016000915054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b60008080549050905090565b600160008273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200190815260200160002060009054906101000a900460ff16156101ce57600080fd5b600080548060010182816101e29190610297565b9160005260206000209001600083909190916101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550507f32ce9bb6ac5aefe4253f61c408ef10c74d8218c4454d01068b550e90022f3fbe81604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390a150565b8154818355818115116102be578183600052602060002091820191016102bd91906102c3565b5b505050565b6102e591905b808211156102e15760008160009055506001016102c9565b5090565b905600a165627a7a723058201fa859d5c83f436d15b8995b1e3b48730b1c851be7b81f56824a9849bd4ffb470029a165627a7a72305820173487d2abab0d9afb82b7aa72fcec010685ffc19b903f0ad77cb3faa10bff880029",
+  "sourceMap": "63:964:2:-;;;;;;;;;;;;;;;;;",
+  "deployedSourceMap": "63:964:2:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;516:236;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;23:1:-1;8:100;33:3;30:1;27:2;8:100;;;99:1;94:3;90;84:5;80:1;75:3;71;64:6;52:2;49:1;45:3;40:15;;8:100;;;12:14;3:109;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;900:124:2;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;329:179;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;760:132;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;516:236;573:9;584:6;;:::i;:::-;592:7;634:6;:16;641:8;634:16;;;;;;;;;;;;;;;:26;;;;;;;;;;;;675:6;:16;682:8;675:16;;;;;;;;;;;;;;;:21;;711:6;:16;718:8;711:16;;;;;;;;;;;;;;;:32;;;;;;;;;;;;612:132;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;516:236;;;;;:::o;900:124::-;961:9;990:6;:16;997:8;990:16;;;;;;;;;;;;;;;:26;;;;;;;;;;;;983:33;;900:124;;;:::o;329:179::-;401:19;423:21;;:::i;:::-;;;;;;;;;;;;;;;;;;401:43;;476:24;;;;;;;;;482:5;476:24;;;;;;;;;;;;489:5;476:24;;;;496:3;476:24;;;;;455:6;:18;462:10;455:18;;;;;;;;;;;;;;;:45;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;329:179;;;:::o;760:132::-;825:7;852:6;:16;859:8;852:16;;;;;;;;;;;;;;;:32;;;;;;;;;;;;845:39;;760:132;;;:::o;63:964::-;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o",
+  "source": "pragma solidity ^0.4.18;\r\n\r\nimport \"./ProductDatabase.sol\";\r\n\r\ncontract SupplyChainRegistry {\r\n\r\n    enum ActorType { Manufacturer, Shipper, Distributor, Retailer }\r\n\r\n    struct Actor {\r\n        ActorType actorType;\r\n        string name;\r\n        address productDatabase;\r\n    }\r\n\r\n    mapping (address => Actor) actors;\r\n\r\n    function registerActor(ActorType _type, string _name) public {\r\n        ProductDatabase pdb = new ProductDatabase();\r\n        actors[msg.sender] = Actor(_type, _name, pdb);\r\n    }\r\n\r\n    function getActor(address _address) public view returns (ActorType, string, address) {\r\n        return (\r\n            actors[_address].actorType,\r\n            actors[_address].name,\r\n            actors[_address].productDatabase);\r\n    }\r\n\r\n    function getActorDatabase(address _address) public view returns (address) {\r\n        return actors[_address].productDatabase;\r\n    }\r\n\r\n    function getActorType(address _address) public view returns (ActorType) {\r\n        return actors[_address].actorType;\r\n    }\r\n}",
+  "sourcePath": "C:\\Users\\CQ464UC\\Documents\\truffle\\contracts\\SupplyChainRegistry.sol",
+  "ast": {
+    "attributes": {
+      "absolutePath": "/C/Users/CQ464UC/Documents/truffle/contracts/SupplyChainRegistry.sol",
+      "exportedSymbols": {
+        "SupplyChainRegistry": [
+          326
+        ]
+      }
+    },
+    "children": [
+      {
+        "attributes": {
+          "literals": [
+            "solidity",
+            "^",
+            "0.4",
+            ".18"
+          ]
+        },
+        "id": 231,
+        "name": "PragmaDirective",
+        "src": "0:24:2"
+      },
+      {
+        "attributes": {
+          "SourceUnit": 230,
+          "absolutePath": "/C/Users/CQ464UC/Documents/truffle/contracts/ProductDatabase.sol",
+          "file": "./ProductDatabase.sol",
+          "scope": 327,
+          "symbolAliases": [
+            null
+          ],
+          "unitAlias": ""
+        },
+        "id": 232,
+        "name": "ImportDirective",
+        "src": "28:31:2"
+      },
+      {
+        "attributes": {
+          "baseContracts": [
+            null
+          ],
+          "contractDependencies": [
+            229
+          ],
+          "contractKind": "contract",
+          "documentation": null,
+          "fullyImplemented": true,
+          "linearizedBaseContracts": [
+            326
+          ],
+          "name": "SupplyChainRegistry",
+          "scope": 327
+        },
+        "children": [
+          {
+            "attributes": {
+              "canonicalName": "SupplyChainRegistry.ActorType",
+              "name": "ActorType"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "name": "Manufacturer"
+                },
+                "id": 233,
+                "name": "EnumValue",
+                "src": "118:12:2"
+              },
+              {
+                "attributes": {
+                  "name": "Shipper"
+                },
+                "id": 234,
+                "name": "EnumValue",
+                "src": "132:7:2"
+              },
+              {
+                "attributes": {
+                  "name": "Distributor"
+                },
+                "id": 235,
+                "name": "EnumValue",
+                "src": "141:11:2"
+              },
+              {
+                "attributes": {
+                  "name": "Retailer"
+                },
+                "id": 236,
+                "name": "EnumValue",
+                "src": "154:8:2"
+              }
+            ],
+            "id": 237,
+            "name": "EnumDefinition",
+            "src": "101:63:2"
+          },
+          {
+            "attributes": {
+              "canonicalName": "SupplyChainRegistry.Actor",
+              "name": "Actor",
+              "scope": 326,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "actorType",
+                  "scope": 244,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "enum SupplyChainRegistry.ActorType",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "ActorType",
+                      "referencedDeclaration": 237,
+                      "type": "enum SupplyChainRegistry.ActorType"
+                    },
+                    "id": 238,
+                    "name": "UserDefinedTypeName",
+                    "src": "196:9:2"
+                  }
+                ],
+                "id": 239,
+                "name": "VariableDeclaration",
+                "src": "196:19:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "name",
+                  "scope": 244,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "string storage pointer",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "string",
+                      "type": "string storage pointer"
+                    },
+                    "id": 240,
+                    "name": "ElementaryTypeName",
+                    "src": "226:6:2"
+                  }
+                ],
+                "id": 241,
+                "name": "VariableDeclaration",
+                "src": "226:11:2"
+              },
+              {
+                "attributes": {
+                  "constant": false,
+                  "name": "productDatabase",
+                  "scope": 244,
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "type": "address",
+                  "value": null,
+                  "visibility": "internal"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 242,
+                    "name": "ElementaryTypeName",
+                    "src": "248:7:2"
+                  }
+                ],
+                "id": 243,
+                "name": "VariableDeclaration",
+                "src": "248:23:2"
+              }
+            ],
+            "id": 244,
+            "name": "StructDefinition",
+            "src": "172:107:2"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "name": "actors",
+              "scope": 326,
+              "stateVariable": true,
+              "storageLocation": "default",
+              "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)",
+              "value": null,
+              "visibility": "internal"
+            },
+            "children": [
+              {
+                "attributes": {
+                  "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)"
+                },
+                "children": [
+                  {
+                    "attributes": {
+                      "name": "address",
+                      "type": "address"
+                    },
+                    "id": 245,
+                    "name": "ElementaryTypeName",
+                    "src": "296:7:2"
+                  },
+                  {
+                    "attributes": {
+                      "contractScope": null,
+                      "name": "Actor",
+                      "referencedDeclaration": 244,
+                      "type": "struct SupplyChainRegistry.Actor storage pointer"
+                    },
+                    "id": 246,
+                    "name": "UserDefinedTypeName",
+                    "src": "307:5:2"
+                  }
+                ],
+                "id": 247,
+                "name": "Mapping",
+                "src": "287:26:2"
+              }
+            ],
+            "id": 248,
+            "name": "VariableDeclaration",
+            "src": "287:33:2"
+          },
+          {
+            "attributes": {
+              "constant": false,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "registerActor",
+              "payable": false,
+              "scope": 326,
+              "stateMutability": "nonpayable",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_type",
+                      "scope": 273,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum SupplyChainRegistry.ActorType",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "ActorType",
+                          "referencedDeclaration": 237,
+                          "type": "enum SupplyChainRegistry.ActorType"
+                        },
+                        "id": 249,
+                        "name": "UserDefinedTypeName",
+                        "src": "352:9:2"
+                      }
+                    ],
+                    "id": 250,
+                    "name": "VariableDeclaration",
+                    "src": "352:15:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_name",
+                      "scope": 273,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 251,
+                        "name": "ElementaryTypeName",
+                        "src": "369:6:2"
+                      }
+                    ],
+                    "id": 252,
+                    "name": "VariableDeclaration",
+                    "src": "369:12:2"
+                  }
+                ],
+                "id": 253,
+                "name": "ParameterList",
+                "src": "351:31:2"
+              },
+              {
+                "attributes": {
+                  "parameters": [
+                    null
+                  ]
+                },
+                "children": [],
+                "id": 254,
+                "name": "ParameterList",
+                "src": "390:0:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "assignments": [
+                        256
+                      ]
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "constant": false,
+                          "name": "pdb",
+                          "scope": 273,
+                          "stateVariable": false,
+                          "storageLocation": "default",
+                          "type": "contract ProductDatabase",
+                          "value": null,
+                          "visibility": "internal"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "contractScope": null,
+                              "name": "ProductDatabase",
+                              "referencedDeclaration": 229,
+                              "type": "contract ProductDatabase"
+                            },
+                            "id": 255,
+                            "name": "UserDefinedTypeName",
+                            "src": "401:15:2"
+                          }
+                        ],
+                        "id": 256,
+                        "name": "VariableDeclaration",
+                        "src": "401:19:2"
+                      },
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "arguments": [
+                            null
+                          ],
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "isStructConstructorCall": false,
+                          "lValueRequested": false,
+                          "names": [
+                            null
+                          ],
+                          "type": "contract ProductDatabase",
+                          "type_conversion": false
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": [
+                                null
+                              ],
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "function () returns (contract ProductDatabase)"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "contractScope": null,
+                                  "name": "ProductDatabase",
+                                  "referencedDeclaration": 229,
+                                  "type": "contract ProductDatabase"
+                                },
+                                "id": 257,
+                                "name": "UserDefinedTypeName",
+                                "src": "427:15:2"
+                              }
+                            ],
+                            "id": 258,
+                            "name": "NewExpression",
+                            "src": "423:19:2"
+                          }
+                        ],
+                        "id": 259,
+                        "name": "FunctionCall",
+                        "src": "423:21:2"
+                      }
+                    ],
+                    "id": 260,
+                    "name": "VariableDeclarationStatement",
+                    "src": "401:43:2"
+                  },
+                  {
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "operator": "=",
+                          "type": "struct SupplyChainRegistry.Actor storage ref"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": true,
+                              "type": "struct SupplyChainRegistry.Actor storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 248,
+                                  "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)",
+                                  "value": "actors"
+                                },
+                                "id": 261,
+                                "name": "Identifier",
+                                "src": "455:6:2"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": false,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "member_name": "sender",
+                                  "referencedDeclaration": null,
+                                  "type": "address"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 338,
+                                      "type": "msg",
+                                      "value": "msg"
+                                    },
+                                    "id": 262,
+                                    "name": "Identifier",
+                                    "src": "462:3:2"
+                                  }
+                                ],
+                                "id": 263,
+                                "name": "MemberAccess",
+                                "src": "462:10:2"
+                              }
+                            ],
+                            "id": 264,
+                            "name": "IndexAccess",
+                            "src": "455:18:2"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": false,
+                              "isPure": false,
+                              "isStructConstructorCall": true,
+                              "lValueRequested": false,
+                              "names": [
+                                null
+                              ],
+                              "type": "struct SupplyChainRegistry.Actor memory",
+                              "type_conversion": false
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": [
+                                    {
+                                      "typeIdentifier": "t_enum$_ActorType_$237",
+                                      "typeString": "enum SupplyChainRegistry.ActorType"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_string_memory_ptr",
+                                      "typeString": "string memory"
+                                    },
+                                    {
+                                      "typeIdentifier": "t_contract$_ProductDatabase_$229",
+                                      "typeString": "contract ProductDatabase"
+                                    }
+                                  ],
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 244,
+                                  "type": "type(struct SupplyChainRegistry.Actor storage pointer)",
+                                  "value": "Actor"
+                                },
+                                "id": 265,
+                                "name": "Identifier",
+                                "src": "476:5:2"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 250,
+                                  "type": "enum SupplyChainRegistry.ActorType",
+                                  "value": "_type"
+                                },
+                                "id": 266,
+                                "name": "Identifier",
+                                "src": "482:5:2"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 252,
+                                  "type": "string memory",
+                                  "value": "_name"
+                                },
+                                "id": 267,
+                                "name": "Identifier",
+                                "src": "489:5:2"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 256,
+                                  "type": "contract ProductDatabase",
+                                  "value": "pdb"
+                                },
+                                "id": 268,
+                                "name": "Identifier",
+                                "src": "496:3:2"
+                              }
+                            ],
+                            "id": 269,
+                            "name": "FunctionCall",
+                            "src": "476:24:2"
+                          }
+                        ],
+                        "id": 270,
+                        "name": "Assignment",
+                        "src": "455:45:2"
+                      }
+                    ],
+                    "id": 271,
+                    "name": "ExpressionStatement",
+                    "src": "455:45:2"
+                  }
+                ],
+                "id": 272,
+                "name": "Block",
+                "src": "390:118:2"
+              }
+            ],
+            "id": 273,
+            "name": "FunctionDefinition",
+            "src": "329:179:2"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getActor",
+              "payable": false,
+              "scope": 326,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_address",
+                      "scope": 299,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 274,
+                        "name": "ElementaryTypeName",
+                        "src": "534:7:2"
+                      }
+                    ],
+                    "id": 275,
+                    "name": "VariableDeclaration",
+                    "src": "534:16:2"
+                  }
+                ],
+                "id": 276,
+                "name": "ParameterList",
+                "src": "533:18:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 299,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum SupplyChainRegistry.ActorType",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "ActorType",
+                          "referencedDeclaration": 237,
+                          "type": "enum SupplyChainRegistry.ActorType"
+                        },
+                        "id": 277,
+                        "name": "UserDefinedTypeName",
+                        "src": "573:9:2"
+                      }
+                    ],
+                    "id": 278,
+                    "name": "VariableDeclaration",
+                    "src": "573:9:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 299,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "string memory",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "string",
+                          "type": "string storage pointer"
+                        },
+                        "id": 279,
+                        "name": "ElementaryTypeName",
+                        "src": "584:6:2"
+                      }
+                    ],
+                    "id": 280,
+                    "name": "VariableDeclaration",
+                    "src": "584:6:2"
+                  },
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 299,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 281,
+                        "name": "ElementaryTypeName",
+                        "src": "592:7:2"
+                      }
+                    ],
+                    "id": 282,
+                    "name": "VariableDeclaration",
+                    "src": "592:7:2"
+                  }
+                ],
+                "id": 283,
+                "name": "ParameterList",
+                "src": "572:28:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 283
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isInlineArray": false,
+                          "isLValue": false,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "type": "tuple(enum SupplyChainRegistry.ActorType,string storage ref,address)"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "actorType",
+                              "referencedDeclaration": 239,
+                              "type": "enum SupplyChainRegistry.ActorType"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "struct SupplyChainRegistry.Actor storage ref"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 248,
+                                      "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)",
+                                      "value": "actors"
+                                    },
+                                    "id": 284,
+                                    "name": "Identifier",
+                                    "src": "634:6:2"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 275,
+                                      "type": "address",
+                                      "value": "_address"
+                                    },
+                                    "id": 285,
+                                    "name": "Identifier",
+                                    "src": "641:8:2"
+                                  }
+                                ],
+                                "id": 286,
+                                "name": "IndexAccess",
+                                "src": "634:16:2"
+                              }
+                            ],
+                            "id": 287,
+                            "name": "MemberAccess",
+                            "src": "634:26:2"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "name",
+                              "referencedDeclaration": 241,
+                              "type": "string storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "struct SupplyChainRegistry.Actor storage ref"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 248,
+                                      "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)",
+                                      "value": "actors"
+                                    },
+                                    "id": 288,
+                                    "name": "Identifier",
+                                    "src": "675:6:2"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 275,
+                                      "type": "address",
+                                      "value": "_address"
+                                    },
+                                    "id": 289,
+                                    "name": "Identifier",
+                                    "src": "682:8:2"
+                                  }
+                                ],
+                                "id": 290,
+                                "name": "IndexAccess",
+                                "src": "675:16:2"
+                              }
+                            ],
+                            "id": 291,
+                            "name": "MemberAccess",
+                            "src": "675:21:2"
+                          },
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "member_name": "productDatabase",
+                              "referencedDeclaration": 243,
+                              "type": "address"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "isConstant": false,
+                                  "isLValue": true,
+                                  "isPure": false,
+                                  "lValueRequested": false,
+                                  "type": "struct SupplyChainRegistry.Actor storage ref"
+                                },
+                                "children": [
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 248,
+                                      "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)",
+                                      "value": "actors"
+                                    },
+                                    "id": 292,
+                                    "name": "Identifier",
+                                    "src": "711:6:2"
+                                  },
+                                  {
+                                    "attributes": {
+                                      "argumentTypes": null,
+                                      "overloadedDeclarations": [
+                                        null
+                                      ],
+                                      "referencedDeclaration": 275,
+                                      "type": "address",
+                                      "value": "_address"
+                                    },
+                                    "id": 293,
+                                    "name": "Identifier",
+                                    "src": "718:8:2"
+                                  }
+                                ],
+                                "id": 294,
+                                "name": "IndexAccess",
+                                "src": "711:16:2"
+                              }
+                            ],
+                            "id": 295,
+                            "name": "MemberAccess",
+                            "src": "711:32:2"
+                          }
+                        ],
+                        "id": 296,
+                        "name": "TupleExpression",
+                        "src": "619:125:2"
+                      }
+                    ],
+                    "id": 297,
+                    "name": "Return",
+                    "src": "612:132:2"
+                  }
+                ],
+                "id": 298,
+                "name": "Block",
+                "src": "601:151:2"
+              }
+            ],
+            "id": 299,
+            "name": "FunctionDefinition",
+            "src": "516:236:2"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getActorDatabase",
+              "payable": false,
+              "scope": 326,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_address",
+                      "scope": 312,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 300,
+                        "name": "ElementaryTypeName",
+                        "src": "786:7:2"
+                      }
+                    ],
+                    "id": 301,
+                    "name": "VariableDeclaration",
+                    "src": "786:16:2"
+                  }
+                ],
+                "id": 302,
+                "name": "ParameterList",
+                "src": "785:18:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 312,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 303,
+                        "name": "ElementaryTypeName",
+                        "src": "825:7:2"
+                      }
+                    ],
+                    "id": 304,
+                    "name": "VariableDeclaration",
+                    "src": "825:7:2"
+                  }
+                ],
+                "id": 305,
+                "name": "ParameterList",
+                "src": "824:9:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 305
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "productDatabase",
+                          "referencedDeclaration": 243,
+                          "type": "address"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct SupplyChainRegistry.Actor storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 248,
+                                  "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)",
+                                  "value": "actors"
+                                },
+                                "id": 306,
+                                "name": "Identifier",
+                                "src": "852:6:2"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 301,
+                                  "type": "address",
+                                  "value": "_address"
+                                },
+                                "id": 307,
+                                "name": "Identifier",
+                                "src": "859:8:2"
+                              }
+                            ],
+                            "id": 308,
+                            "name": "IndexAccess",
+                            "src": "852:16:2"
+                          }
+                        ],
+                        "id": 309,
+                        "name": "MemberAccess",
+                        "src": "852:32:2"
+                      }
+                    ],
+                    "id": 310,
+                    "name": "Return",
+                    "src": "845:39:2"
+                  }
+                ],
+                "id": 311,
+                "name": "Block",
+                "src": "834:58:2"
+              }
+            ],
+            "id": 312,
+            "name": "FunctionDefinition",
+            "src": "760:132:2"
+          },
+          {
+            "attributes": {
+              "constant": true,
+              "implemented": true,
+              "isConstructor": false,
+              "modifiers": [
+                null
+              ],
+              "name": "getActorType",
+              "payable": false,
+              "scope": 326,
+              "stateMutability": "view",
+              "superFunction": null,
+              "visibility": "public"
+            },
+            "children": [
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "_address",
+                      "scope": 325,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "address",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "name": "address",
+                          "type": "address"
+                        },
+                        "id": 313,
+                        "name": "ElementaryTypeName",
+                        "src": "922:7:2"
+                      }
+                    ],
+                    "id": 314,
+                    "name": "VariableDeclaration",
+                    "src": "922:16:2"
+                  }
+                ],
+                "id": 315,
+                "name": "ParameterList",
+                "src": "921:18:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "constant": false,
+                      "name": "",
+                      "scope": 325,
+                      "stateVariable": false,
+                      "storageLocation": "default",
+                      "type": "enum SupplyChainRegistry.ActorType",
+                      "value": null,
+                      "visibility": "internal"
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "contractScope": null,
+                          "name": "ActorType",
+                          "referencedDeclaration": 237,
+                          "type": "enum SupplyChainRegistry.ActorType"
+                        },
+                        "id": 316,
+                        "name": "UserDefinedTypeName",
+                        "src": "961:9:2"
+                      }
+                    ],
+                    "id": 317,
+                    "name": "VariableDeclaration",
+                    "src": "961:9:2"
+                  }
+                ],
+                "id": 318,
+                "name": "ParameterList",
+                "src": "960:11:2"
+              },
+              {
+                "children": [
+                  {
+                    "attributes": {
+                      "functionReturnParameters": 318
+                    },
+                    "children": [
+                      {
+                        "attributes": {
+                          "argumentTypes": null,
+                          "isConstant": false,
+                          "isLValue": true,
+                          "isPure": false,
+                          "lValueRequested": false,
+                          "member_name": "actorType",
+                          "referencedDeclaration": 239,
+                          "type": "enum SupplyChainRegistry.ActorType"
+                        },
+                        "children": [
+                          {
+                            "attributes": {
+                              "argumentTypes": null,
+                              "isConstant": false,
+                              "isLValue": true,
+                              "isPure": false,
+                              "lValueRequested": false,
+                              "type": "struct SupplyChainRegistry.Actor storage ref"
+                            },
+                            "children": [
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 248,
+                                  "type": "mapping(address => struct SupplyChainRegistry.Actor storage ref)",
+                                  "value": "actors"
+                                },
+                                "id": 319,
+                                "name": "Identifier",
+                                "src": "990:6:2"
+                              },
+                              {
+                                "attributes": {
+                                  "argumentTypes": null,
+                                  "overloadedDeclarations": [
+                                    null
+                                  ],
+                                  "referencedDeclaration": 314,
+                                  "type": "address",
+                                  "value": "_address"
+                                },
+                                "id": 320,
+                                "name": "Identifier",
+                                "src": "997:8:2"
+                              }
+                            ],
+                            "id": 321,
+                            "name": "IndexAccess",
+                            "src": "990:16:2"
+                          }
+                        ],
+                        "id": 322,
+                        "name": "MemberAccess",
+                        "src": "990:26:2"
+                      }
+                    ],
+                    "id": 323,
+                    "name": "Return",
+                    "src": "983:33:2"
+                  }
+                ],
+                "id": 324,
+                "name": "Block",
+                "src": "972:52:2"
+              }
+            ],
+            "id": 325,
+            "name": "FunctionDefinition",
+            "src": "900:124:2"
+          }
+        ],
+        "id": 326,
+        "name": "ContractDefinition",
+        "src": "63:964:2"
+      }
+    ],
+    "id": 327,
+    "name": "SourceUnit",
+    "src": "0:1027:2"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.18+commit.9cf6e910.Emscripten.clang"
+  },
+  "networks": {
+    "15": {
+      "events": {},
+      "links": {},
+      "address": "0x8d4929749C413BAD80BA52462e8943EAb03C463a"
+    }
+  },
+  "schemaVersion": "1.0.1",
+  "updatedAt": "2017-11-14T20:31:09.560Z"
+}
