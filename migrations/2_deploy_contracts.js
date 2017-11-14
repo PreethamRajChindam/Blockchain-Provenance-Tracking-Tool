@@ -1,5 +1,8 @@
-var ProductDatabase = artifacts.require("./ProductDatabase.sol");
+var SupplyChainRegistry = artifacts.require("./SupplyChainRegistry.sol");
+var ProductFactory = artifacts.require("./ProductFactory.sol");
 
 module.exports = function(deployer){
-    deployer.deploy(ProductDatabase);
+    deployer.deploy(SupplyChainRegistry).then(function() {
+        return deployer.deploy(ProductFactory, SupplyChainRegistry.address);
+      });
 }
