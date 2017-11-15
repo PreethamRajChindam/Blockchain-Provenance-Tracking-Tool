@@ -13,6 +13,7 @@ contract SupplyChainRegistry {
     }
 
     mapping (address => Actor) actors;
+    address[] public actorList;
 
     function registerActor(ActorType _type, string _name) public {
         ProductDatabase pdb = new ProductDatabase();
@@ -32,5 +33,9 @@ contract SupplyChainRegistry {
 
     function getActorType(address _address) public view returns (ActorType) {
         return actors[_address].actorType;
+    }
+
+    function getCount() public view returns (uint count) {
+        return actorList.length;
     }
 }
