@@ -38,7 +38,7 @@ hr{
                     margin-top: 5px;
                     }
 
-#myBtn {margin-right: 20px !important;
+#myBtn, #btn-rts {margin-right: 20px !important;
     margin-left: 20px !important;}
 
 .text-center {vertical-align: middle;}
