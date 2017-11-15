@@ -1,21 +1,14 @@
-/*
-/* Created by Filipe Pina
- * Specific styles of signin, register, component
- */
-/*
- * General styles
- */
  #playground-container {
     height: 500px;
     overflow: hidden !important;
     -webkit-overflow-scrolling: touch;
 }
+
 body, html{
      height: 100%;
  	font-family: 'Oxygen', sans-serif;
 	    background-size: cover;
 }
-
 
 #search {padding-top: 1px !important;}
 
@@ -38,7 +31,7 @@ hr{
                     margin-top: 5px;
                     }
 
-#myBtn {margin-right: 20px !important;
+#myBtn, #btn-rts {margin-right: 20px !important;
     margin-left: 20px !important;}
 
 .text-center {vertical-align: middle;}
@@ -138,7 +131,7 @@ span.input-group-addon i {
 }
 
 .wider {
-        width: 130%;
+        width: 150%;
         left: 50%;
         transform: translateX(-50%);}
 

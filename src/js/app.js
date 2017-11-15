@@ -36,9 +36,9 @@ App = {
         App.contracts.ProductDatabase = TruffleContract(data);
         App.contracts.ProductDatabase.setProvider(App.web3Provider);
         
-        $.getJSON('Product.json', function(data) {
-          App.contracts.Product = TruffleContract(data);
-          App.contracts.Product.setProvider(App.web3Provider);
+      $.getJSON('Product.json', function(data) {
+        App.contracts.Product = TruffleContract(data);
+        App.contracts.Product.setProvider(App.web3Provider);
         });
       });
       App.getActors();
@@ -135,8 +135,6 @@ App = {
 
   registerActor: function(event) {
     event.preventDefault();
-
-    //var petId = parseInt($(event.target).data('id'));
 
     var ci;
 
@@ -292,7 +290,6 @@ App = {
       });
     });
   }
-
 };
 
 function selectOnlyThis(id){
