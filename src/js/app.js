@@ -34,9 +34,9 @@ App = {
         App.contracts.ProductDatabase = TruffleContract(data);
         App.contracts.ProductDatabase.setProvider(App.web3Provider);
         
-        $.getJSON('Product.json', function(data) {
-          App.contracts.Product = TruffleContract(data);
-          App.contracts.Product.setProvider(App.web3Provider);
+      $.getJSON('Product.json', function(data) {
+        App.contracts.Product = TruffleContract(data);
+        App.contracts.Product.setProvider(App.web3Provider);
         });
       });
 
@@ -100,8 +100,6 @@ App = {
 
   registerActor: function(event) {
     event.preventDefault();
-
-    //var petId = parseInt($(event.target).data('id'));
 
     var ci;
 
@@ -253,21 +251,7 @@ App = {
         });
       });
     });
-    
-    
-    /*web3.eth.getAccounts(function(error, accounts) {
-      if (error) {
-        console.log(error);
-      }
-      var account = accounts[0];
-      App.contracts.Product.at(address).then(instance=>{
-        return instance.addAction("ready to ship", 1, {from: account});            
-      }).catch(function(err) {
-        console.log(err.message);
-      });
-    });*/
   }
-
 };
 
 function selectOnlyThis(id){
