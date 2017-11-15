@@ -273,7 +273,7 @@ App = {
           console.log(error);
         }
         var account = accounts[0];
-        App.contracts.Product.at(address).then(instance=>{
+        App.contracts.Product.at(address).then(product=>{
           const allEvents = product.allEvents({
             fromBlock: 0,
             toBlock: 'latest'
@@ -283,7 +283,7 @@ App = {
             allEvents.stopWatching();
           });
           var ref = $('select[name="actor-list"]').val();
-          return instance.addAction("ready to ship", 1, ref, {from: account});            
+          return product.addAction("ready to ship", 1, ref, {from: account});            
         }).catch(function(err) {
           console.log(err.message);
         });
