@@ -173,7 +173,7 @@ App = {
               link.html($('<a data-toggle="modal" data-target="#HistoryModal"></a>').html(address));
               tr.append(link);
               tr.append($("<td></td>").html(data[0]));
-              tr.append($("<td></td>").html(data[2]));
+              tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(data[2]));
               tr.append($("<td></td>").html(data[1].c[0]));
               tr.append($("<td></td>").html(checkbox));
               $("#package-list tbody").append(tr);
