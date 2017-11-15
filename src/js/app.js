@@ -167,6 +167,23 @@ App = {
             App.contracts.Product.at(address).then(instance3=>{
               return instance3.getState();            
             }).then(data=>{
+              let _actor;
+              switch (data[1].c[0]) {
+                case 0:
+                _actor="Manufacturer";
+                break;
+              case 1: 
+                _actor="Shipper";
+                break;
+              case 2: 
+                _actor="Distributor";
+                break;
+              case 3: 
+                _actor="Retailer";
+                break;
+              default: 
+                _actor="";
+              }
               var tr = $('<tr></tr>');
               var link = $('<td style="word-wrap: break-word; max-width: 250px;"></td>');
               var checkbox = $('<input type="checkbox" id="selector" name="myCheckbox" onclick="selectOnlyThis(this)"> <label for="selector">Select</label>');
@@ -174,7 +191,7 @@ App = {
               tr.append(link);
               tr.append($("<td></td>").html(data[0]));
               tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(data[2]));
-              tr.append($("<td></td>").html(data[1].c[0]));
+              tr.append($("<td></td>").html(_actor));
               tr.append($("<td></td>").html(checkbox));
               $("#package-list tbody").append(tr);
               function selectOnlyThis(id){
