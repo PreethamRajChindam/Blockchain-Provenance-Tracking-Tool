@@ -49,6 +49,8 @@ App = {
   bindEvents: function() {
     $(document).on('click', '#btn-register', App.registerActor);
     $(document).on('click', '#btn-add-package', App.addProduct);
+    $(document).on('click', '#a-prod-history', App.getProductHistory);
+    $(document).on('click', '#btn-rts', App.markAsRTS);
   },
 
   getActor: function(adopters, account) {
@@ -65,9 +67,12 @@ App = {
         return ci.getActor(account);
       }).then(function(data) {
           App.productDatabase = data[2];
-          if (App.productDatabase !== "0x0000000000000000000000000000000000000000") {
+
+          if (App.productDatabase == "0x0000000000000000000000000000000000000000") {
+            return;
+          }
           var type="";
-          switch(data[0].e){
+          switch(data[0].c[0]){
             case 0:
               type="Manufacturer";
               break;
@@ -83,8 +88,6 @@ App = {
             default: 
               type="";
           }
-        }
-        console.log(data[2]);
         if (type !== undefined) {
           $("#welcome-message").text("Welcome " + data[1] + "!, you are registered as " + type + ".");
         }
@@ -190,8 +193,9 @@ App = {
               }
               
               var tr = $('<tr></tr>');
-              var link = $('<td style="word-wrap: break-word; max-width: 250px;"></td>');
+              var link = $('<td style="word-wrap: break-word; max-width: 250px; cursor: pointer;"></td>');
               var checkbox = $('<input type="checkbox" id="selector" name="myCheckbox" onclick="selectOnlyThis(this)"> <label for="selector">Select</label>');
+              checkbox.attr('data-id',address);
               link.html($('<a data-toggle="modal" data-target="#HistoryModal"></a>').html(address));
               tr.append(link);
               tr.append($("<td></td>").html(data[0]));
@@ -213,6 +217,55 @@ App = {
     }).catch(function(err) {
       console.log(err.message);
     });
+  },
+
+  getProductHistory:  function(event){
+    event.preventDefault();
+    var address = $(event.target).data('id');
+    var events = App.contracts.Product.at(address).then(meta => {
+      const allEvents = meta.allEvents({
+        fromBlock: 0,
+        toBlock: 'latest'
+      });
+      allEvents.watch((err, res) => {
+        console.log(err, res);
+      });
+    });
+    App.contracts.Product.at(address).then(instance=>{
+      return instance.getState();            
+    });
+  },
+
+  markAsRTS: function(event){
+    event.preventDefault();
+    var products = $('input[name="mark"]:checked');
+    products.each(function(element) {
+      var address = $(this).data('id');
+      web3.eth.getAccounts(function(error, accounts) {
+        if (error) {
+          console.log(error);
+        }
+        var account = accounts[0];
+        App.contracts.Product.at(address).then(instance=>{
+          return instance.addAction("ready to ship", 1, "", {from: account});            
+        }).catch(function(err) {
+          console.log(err.message);
+        });
+      });
+    });
+    
+    
+    /*web3.eth.getAccounts(function(error, accounts) {
+      if (error) {
+        console.log(error);
+      }
+      var account = accounts[0];
+      App.contracts.Product.at(address).then(instance=>{
+        return instance.addAction("ready to ship", 1, {from: account});            
+      }).catch(function(err) {
+        console.log(err.message);
+      });
+    });*/
   }
 
 };
