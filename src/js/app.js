@@ -169,12 +169,21 @@ App = {
             }).then(data=>{
               var tr = $('<tr></tr>');
               var link = $('<td style="word-wrap: break-word; max-width: 250px;"></td>');
+              var checkbox = $('<input type="checkbox" id="selector" name="myCheckbox" onclick="selectOnlyThis(this)"> <label for="selector">Select</label>');
               link.html($('<a data-toggle="modal" data-target="#HistoryModal"></a>').html(address));
               tr.append(link);
               tr.append($("<td></td>").html(data[0]));
               tr.append($("<td></td>").html(data[2]));
               tr.append($("<td></td>").html(data[1].c[0]));
+              tr.append($("<td></td>").html(checkbox));
               $("#package-list tbody").append(tr);
+              function selectOnlyThis(id){
+  var myCheckbox = document.getElementsByName("myCheckbox");
+  Array.prototype.forEach.call(myCheckbox,function(el){
+    el.checked = false;
+  });
+  id.checked = true;
+}
             });
           });
         })(i);
@@ -185,6 +194,14 @@ App = {
   }
 
 };
+
+function selectOnlyThis(id){
+  var myCheckbox = document.getElementsByName("myCheckbox");
+  Array.prototype.forEach.call(myCheckbox,function(el){
+    el.checked = false;
+  });
+    id.checked = true;
+  }
 
 $(function() {
   $(window).load(function() {
