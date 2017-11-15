@@ -67,6 +67,7 @@ App = {
         return ci.getActor(account);
       }).then(function(data) {
           App.productDatabase = data[2];
+
           if (App.productDatabase == "0x0000000000000000000000000000000000000000") {
             return;
           }
@@ -169,20 +170,46 @@ App = {
             App.contracts.Product.at(address).then(instance3=>{
               return instance3.getState();            
             }).then(data=>{
+              let _actor;
+              switch (data[1].c[0]) {
+                case 0:
+                _actor="Manufacturing";
+                break;
+              case 1: 
+                _actor="Ready To Ship";
+                break;
+              case 2: 
+                _actor="Shipping";
+                break;
+              case 3: 
+                _actor="In Warehouse";
+                break;
+              case 4: 
+                _actor="In Transit To Retail";
+              case 5:
+                _actor="Ready Retail Stock";
+              case 6:
+                _actor="Sold";
+              }
+              
               var tr = $('<tr></tr>');
-              var link = $('<td style="word-wrap: break-word; cursor: pointer; max-width: 250px;"></td>');
-              var a = $('<a id="a-prod-history"></a>');
-              a.html(address);
-              a.attr('data-id',address);
-              link.html(a);
+              var link = $('<td style="word-wrap: break-word; max-width: 250px; cursor: pointer;"></td>');
+              var checkbox = $('<input type="checkbox" id="selector" name="myCheckbox" onclick="selectOnlyThis(this)"> <label for="selector">Select</label>');
+              checkbox.attr('data-id',address);
+              link.html($('<a data-toggle="modal" data-target="#HistoryModal"></a>').html(address));
               tr.append(link);
               tr.append($("<td></td>").html(data[0]));
-              tr.append($("<td></td>").html(data[2]));
-              tr.append($("<td></td>").html(data[1].c[0]));
-              var checkbox = $('<input type="checkbox" name="mark"/>');
-              checkbox.attr('data-id',address);
-              tr.append(checkbox);
+              tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(data[2]));
+              tr.append($("<td></td>").html(_actor));
+              tr.append($("<td></td>").html(checkbox));
               $("#package-list tbody").append(tr);
+              function selectOnlyThis(id){
+  var myCheckbox = document.getElementsByName("myCheckbox");
+  Array.prototype.forEach.call(myCheckbox,function(el){
+    el.checked = false;
+  });
+  id.checked = true;
+}
             });
           });
         })(i);
@@ -242,6 +269,14 @@ App = {
   }
 
 };
+
+function selectOnlyThis(id){
+  var myCheckbox = document.getElementsByName("myCheckbox");
+  Array.prototype.forEach.call(myCheckbox,function(el){
+    el.checked = false;
+  });
+    id.checked = true;
+  }
 
 $(function() {
   $(window).load(function() {
