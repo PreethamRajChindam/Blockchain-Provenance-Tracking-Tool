@@ -238,7 +238,7 @@ App = {
 
   markAsRTS: function(event){
     event.preventDefault();
-    var products = $('input[name="mark"]:checked');
+    var products = $('input[name="myCheckbox"]:checked');
     products.each(function(element) {
       var address = $(this).data('id');
       web3.eth.getAccounts(function(error, accounts) {
