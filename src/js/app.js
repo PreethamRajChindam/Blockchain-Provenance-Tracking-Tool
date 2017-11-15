@@ -187,8 +187,6 @@ App = {
                 _actor="Ready Retail Stock";
               case 6:
                 _actor="Sold";
-              case 7:
-                _actor="Out of Stock";
               }
               
               var tr = $('<tr></tr>');
