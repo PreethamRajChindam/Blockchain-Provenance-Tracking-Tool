@@ -170,20 +170,27 @@ App = {
               let _actor;
               switch (data[1].c[0]) {
                 case 0:
-                _actor="Manufacturer";
+                _actor="Manufacturing";
                 break;
               case 1: 
-                _actor="Shipper";
+                _actor="Ready To Ship";
                 break;
               case 2: 
-                _actor="Distributor";
+                _actor="Shipping";
                 break;
               case 3: 
-                _actor="Retailer";
+                _actor="In Warehouse";
                 break;
-              default: 
-                _actor="";
+              case 4: 
+                _actor="In Transit To Retail";
+              case 5:
+                _actor="Ready Retail Stock";
+              case 6:
+                _actor="Sold";
+              case 7:
+                _actor="Out of Stock";
               }
+              
               var tr = $('<tr></tr>');
               var link = $('<td style="word-wrap: break-word; max-width: 250px;"></td>');
               var checkbox = $('<input type="checkbox" id="selector" name="myCheckbox" onclick="selectOnlyThis(this)"> <label for="selector">Select</label>');

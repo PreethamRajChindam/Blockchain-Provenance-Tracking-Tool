@@ -11,8 +11,8 @@ contract Product {
     Status currentStatus;
     address currentHolder;
 
-    //MF: manufacturing, RTS: ready to ship, SP: shipped, WH: in warehouse
-    //ITR: in transit to retail, RRS: ready retail stock
+    //1.MF: manufacturing, 2.RTS: ready to ship, 3.SP: shipped, 4.WH: in warehouse
+    //5.ITR: in transit to retail, 6.RRS: ready retail stock, 7.SD: Sold
     enum Status {None, MF, RTS, SP, WH, ITR, RRS}
 
     event OnActionEvent (
