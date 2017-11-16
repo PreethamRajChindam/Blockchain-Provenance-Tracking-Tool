@@ -4,6 +4,7 @@ App = {
   productDatabase: null,
   actors: [],
   actor: null,
+  products : [],
 
   init: function () {
     return App.initWeb3();
