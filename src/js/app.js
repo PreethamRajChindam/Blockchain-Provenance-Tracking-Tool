@@ -59,7 +59,6 @@ App = {
     App.contracts.ProductDatabase.at(App.productDatabase).then(function (instance) {
       var event = instance.OnAddProductEvent();
       event.watch(function (error, response) {
-        console.log(response);
         App.getProducts();
         $('#PackageModal').modal('hide');
         event.stopWatching();
@@ -201,13 +200,10 @@ App = {
         }
         var account = accounts[0];
         App.contracts.Product.at(address).then(product => {
-          const allEvents = product.allEvents({
-            fromBlock: 0,
-            toBlock: 'latest'
-          });
-          allEvents.watch((err, res) => {
-            console.log(err, res);
-            allEvents.stopWatching();
+          const event = product.OnActionEvent();
+          event.watch((err, res) => {
+            App.getProducts();
+            event.stopWatching();
           });
           var ref = $('select[name="actor-list"]').val();
           return product.addAction("", statusId, ref, { from: account });
@@ -259,6 +255,7 @@ App = {
     switch (data) {
       case 0:
         type = "Manufacturer";
+        actor_button.attr('data-id',1);
         break;
       case 1:
         type = "Shipper";
@@ -328,7 +325,6 @@ App = {
                 App.drawProductTable();
               });
             });
-            console.log(App.products);
           });
       });
     }
