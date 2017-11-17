@@ -311,8 +311,8 @@ App = {
                 return instance.getActor(history.ref);
               }).then(function (actor) {
                 history.ref=actor[1];
+                App.drawProductTable();
               });
-              App.drawProductTable();
             });
             console.log(App.products);
           });
