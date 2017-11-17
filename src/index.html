@@ -13,6 +13,7 @@
 
   </head>
   <body>
+
     <div class="container">
       
         <div class="row">
@@ -47,14 +48,14 @@
               <select id="actor-list" name="actor-list" class="form-control"></select>
           </div>
           <div class="col-xs-4 col-sm-2">
-              <input type="text" class="form-control" id="search" placeholder="Search Package">
+              <input type="text" class="form-control light-table-filter" data-table="order-table" id="search" placeholder="Filter Package" onkeyup="filterSearch()">
           </div>
         </div>
         <div class="col-xs-12 col-sm-10 col-sm-push-1">
             <div class="row"  >
               <h4 id="package-title">Package List</h4>
               <div class="col-xs-12 col-sm-12">
-                  <table id="package-list" class="table">
+                  <table id="package-list" class="order-table table">
                       <thead>
                         <tr>
                           <th>Hash Number</th>

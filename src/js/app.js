@@ -265,7 +265,7 @@ App = {
         // replace package button for shipping
         package_button.remove();
         var holder = $("#dynamic-button-holder");
-        var shipping_button = $('<button type="button" id="set-shipping" class="btn btn-info btn-sm">Set to Shipping</button>');
+        var shipping_button = $('<button type="button" id="set-shipping" class="btn btn-primary btn-sm">Set to Shipping</button>');
         holder.append(shipping_button);
         break;
       case 2:
@@ -337,7 +337,7 @@ App = {
   drawProductTable: function () {
     $("#package-list tbody").empty();
     App.products.forEach(product => {
-      var tr = $('<tr></tr>');
+      var tr = $('<tr id="search-row"></tr>');
       var link = $('<td style="word-wrap: break-word; max-width: 250px; cursor: pointer;"></td>');
       var checkbox = $('<input type="checkbox" id="selector" name="myCheckbox" onclick="selectOnlyThis(this)"> <label for="selector">Select</label>');
       checkbox.attr('data-id', product.address);
@@ -346,7 +346,7 @@ App = {
       a.attr("data-id", product.address);
       link.html(a);
       tr.append(link);
-      tr.append($("<td></td>").html(product.name));
+      tr.append($("<td id='search-data'></td>").html(product.name));
       tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(product.holder));
       tr.append($("<td></td>").html(product.state));
       tr.append($("<td></td>").html(checkbox));
@@ -376,6 +376,42 @@ function selectOnlyThis(id) {
   });
   id.checked = true;
 }
+
+(function(document) {
+	'use strict';
+
+	var LightTableFilter = (function(Arr) {
+
+		var _input;
+
+		function _onInputEvent(e) {
+			_input = e.target;
+			var tables = document.getElementsByClassName(_input.getAttribute('data-table'));
+			Arr.forEach.call(tables, function(table) {
+				Arr.forEach.call(table.tBodies, function(tbody) {
+					Arr.forEach.call(tbody.rows, _filter);
+				});
+			});
+		}
+		function _filter(row) {
+			var text = row.textContent.toLowerCase(), val = _input.value.toLowerCase();
+			row.style.display = text.indexOf(val) === -1 ? 'none' : 'table-row';
+		}
+      return {
+        init: function() {
+          var inputs = document.getElementsByClassName('light-table-filter');
+          Arr.forEach.call(inputs, function(input) {
+            input.oninput = _onInputEvent;
+          });
+        }
+      };
+    })(Array.prototype);
+      document.addEventListener('readystatechange', function() {
+        if (document.readyState === 'complete') {
+          LightTableFilter.init();
+        }
+      });
+    })(document);
 
 $(function () {
   $(window).load(function () {
