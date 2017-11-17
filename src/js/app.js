@@ -290,16 +290,27 @@ App = {
           holder: data[2],
           history: []
         };
+        App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+          return instance.getActor(product.holder);
+        }).then(function (actor) {
+          product.holder=actor[1];
+        });
         App.products.push(product);
         pInstance.OnActionEvent({}, { fromBlock: 0, toBlock: 'latest' })
           .get((error, result) => {
             result.forEach(row => {
-              product.history.push({
+              var history = {
                 ref: row.args._ref,
                 description: row.args._description,
                 timestamp: row.args._timestamp.c[0],
                 blocknumber: row.args._blockNumber.c[0],
                 status: row.args._status.c[0]
+              };
+              product.history.push(history);
+              App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+                return instance.getActor(history.ref);
+              }).then(function (actor) {
+                history.ref=actor[1];
               });
               App.drawProductTable();
             });
