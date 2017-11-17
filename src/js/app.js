@@ -42,7 +42,6 @@ App = {
           App.contracts.Product.setProvider(App.web3Provider);
           return App.getActor();
         });
-        return App.bindContractEvents();
       });
       return App.getActors();
     });
@@ -122,6 +121,7 @@ App = {
         if (App.actor.stringType !== undefined) {
           $("#welcome-message").text("Welcome " + App.actor.name + "!, you are registered as " + App.actor.stringType + ".");
         }
+        App.bindContractEvents();
         App.getProducts();
       }).catch(function (err) {
         console.log(err.message);
