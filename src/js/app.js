@@ -40,20 +40,30 @@ App = {
         $.getJSON('Product.json', function (data) {
           App.contracts.Product = TruffleContract(data);
           App.contracts.Product.setProvider(App.web3Provider);
+          return App.getActor();
         });
       });
-      App.getActors();
-      return App.getActor();
+      return App.getActors();
     });
-
     return App.bindEvents();
   },
 
   bindEvents: function () {
     $(document).on('click', '#btn-register', App.registerActor);
     $(document).on('click', '#btn-add-package', App.addProduct);
-    $(document).on('click', '#a-prod-history', App.getProductHistory);
-    $(document).on('click', '#btn-rts', App.markAsRTS);
+    $(document).on('click', '#a-prod-history', App.showProductHistory);
+    $(document).on('click', '#btn-rts', App.changeProductState);
+  },
+
+  bindContractEvents: function(){
+    App.contracts.ProductDatabase.at(App.productDatabase).then(function (instance) {
+      var event = instance.OnAddProductEvent();
+      event.watch(function (error, response) {
+        App.getProducts();
+        $('#PackageModal').modal('hide');
+        event.stopWatching();
+      });
+    });
   },
 
   refreshCombobox: function () {
@@ -63,8 +73,8 @@ App = {
     var filteredActors = $.grep(App.actors, function (x) {
       return x.type == App.actor.type + 1;
     });
+    $('#actor-list').empty();
     $(filteredActors).each(function () {
-      $('#actor-list').empty();
       $('<option>').val(this.address).text(this.name).appendTo('#actor-list');
     });
   },
@@ -103,44 +113,17 @@ App = {
         return instance.getActor(account);
       }).then(function (actor) {
         App.productDatabase = actor[2];
-        App.actor = { type: actor[0].c[0], name: actor[1] };
+        App.actor = { type: actor[0].c[0], name: actor[1], stringType: App.getStringActorType(actor[0].c[0]) };
         if (App.productDatabase == "0x0000000000000000000000000000000000000000") {
           return;
         }
-        var type = "";
-        var actor_button = $("#btn-rts");
-        var package_button = $("#add-package-button");
-        switch (actor[0].c[0]) {
-          case 0:
-            type = "Manufacturer";
-            break;
-          case 1:
-            type = "Shipper";
-            actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
-            actor_button.text('Set as Delivered').button("refresh");
-            package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
-            break;
-          case 2:
-            type = "Distributor";
-            actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-primary btn-sm');
-            actor_button.text('Set as Distributed').button("refresh");
-            package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
-            break;
-          case 3:
-            type = "Retailer";
-            actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-success btn-sm');
-            actor_button.text('Set as Sold').button("refresh");
-            package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
-            break;
-          default:
-            type = "";
+        if (App.actor.stringType !== undefined) {
+          $("#welcome-message").text("Welcome " + App.actor.name + "!, you are registered as " + App.actor.stringType + ".");
         }
-        if (type !== undefined) {
-          $("#welcome-message").text("Welcome " + actor[1] + "!, you are registered as " + type + ".");
-        }
+        App.bindContractEvents();
         App.getProducts();
       }).catch(function (err) {
-        console.log("this the error", err.message);
+        console.log(err.message);
       });
     });
   },
@@ -174,15 +157,6 @@ App = {
 
   addProduct: function (event) {
     event.preventDefault();
-    App.contracts.ProductDatabase.at(App.productDatabase).then(function (instance) {
-      var event = instance.OnAddProductEvent();
-      event.watch(function (error, response) {
-        console.log(response);
-        App.getProducts();
-        $('#PackageModal').modal('hide');
-        event.stopWatching();
-      });
-    });
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
@@ -214,24 +188,10 @@ App = {
     });
   },
 
-  getProductHistory: function (event) {
-    event.preventDefault();
-    var address = $(event.target).data('id');
-    var events = App.contracts.Product.at(address).then(product => {
-      const allEvents = product.allEvents({
-        fromBlock: 0,
-        toBlock: 'latest'
-      });
-      allEvents.watch((err, res) => {
-        console.log(err, res);
-        allEvents.stopWatching();
-      });
-    });
-  },
-
-  markAsRTS: function (event) {
+  changeProductState: function (event) {
     event.preventDefault();
     var products = $('input[name="myCheckbox"]:checked');
+    var statusId = parseInt($(event.target).data('id'));
     products.each(function (element) {
       var address = $(this).data('id');
       web3.eth.getAccounts(function (error, accounts) {
@@ -240,21 +200,27 @@ App = {
         }
         var account = accounts[0];
         App.contracts.Product.at(address).then(product => {
-          const allEvents = product.allEvents({
-            fromBlock: 0,
-            toBlock: 'latest'
-          });
-          allEvents.watch((err, res) => {
-            console.log(err, res);
-            allEvents.stopWatching();
+          const event = product.OnActionEvent();
+          event.watch((err, res) => {
+            App.getProducts();
+            event.stopWatching();
           });
           var ref = $('select[name="actor-list"]').val();
-          return product.addAction("ready to ship", 1, ref, { from: account });
+          return product.addAction("", statusId, ref, { from: account });
         }).catch(function (err) {
           console.log(err.message);
         });
       });
     });
+  },
+
+  showProductHistory: function(event){
+    var address = $(event.target).data('id');
+    var product = $.grep(App.products, function (p) {
+      return p.address === address;
+    });
+    App.drawHistoryTable(product[0]);
+    $("#HistoryModal").modal("show");
   },
 
   getStringState: function (data) {
@@ -282,6 +248,42 @@ App = {
     return state;
   },
 
+  getStringActorType(data){
+    var type = "";
+    var actor_button = $("#btn-rts");
+    var package_button = $("#add-package-button");
+    switch (data) {
+      case 0:
+        type = "Manufacturer";
+        actor_button.attr('data-id',1);
+        break;
+      case 1:
+        type = "Shipper";
+        actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
+        actor_button.text('Set as Delivered').button("refresh");
+        actor_button.attr('data-id',2);
+        package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
+        break;
+      case 2:
+        type = "Distributor";
+        actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-primary btn-sm');
+        actor_button.text('Set as Distributed').button("refresh");
+        actor_button.attr('data-id',4);
+        package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
+        break;
+      case 3:
+        type = "Retailer";
+        actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-success btn-sm');
+        actor_button.text('Set as Sold').button("refresh");
+        actor_button.attr('data-id',6);
+        package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
+        break;
+      default:
+        type = "";
+    }
+    return type;
+  },
+
   addToProducts: function (address) {
     var exist = $.grep(App.products, function (p) {
       return p.address === address;
@@ -299,18 +301,29 @@ App = {
           holder: data[2],
           history: []
         };
+        App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+          return instance.getActor(product.holder);
+        }).then(function (actor) {
+          product.holder=actor[1];
+        });
         App.products.push(product);
         pInstance.OnActionEvent({}, { fromBlock: 0, toBlock: 'latest' })
           .get((error, result) => {
             result.forEach(row => {
-              product.history.push({
+              var history = {
                 ref: row.args._ref,
                 description: row.args._description,
-                timestamp: row.args._timestamp,
-                blocknumber: row.args._blockNumber,
-                staus: row.args._status
+                timestamp: row.args._timestamp.c[0],
+                blocknumber: row.args._blockNumber.c[0],
+                status: row.args._status.c[0]
+              };
+              product.history.push(history);
+              App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+                return instance.getActor(history.ref);
+              }).then(function (actor) {
+                history.ref=actor[1];
+                App.drawProductTable();
               });
-              App.drawProductTable();
             });
           });
       });
@@ -334,6 +347,20 @@ App = {
       tr.append($("<td></td>").html(product.state));
       tr.append($("<td></td>").html(checkbox));
       $("#package-list tbody").append(tr);
+    });
+  },
+
+  drawHistoryTable: function (product) {
+    $("#product-history tbody").empty();
+    $("#produt-history-name").html(product.name);
+    $("#produt-history-address").html(product.address);
+    product.history.forEach(row => {
+      var tr = $('<tr></tr>');
+      tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(row.ref));
+      tr.append($("<td></td>").html(new Date(row.timestamp*1000)));
+      tr.append($("<td></td>").html(row.blocknumber));
+      tr.append($("<td></td>").html(App.getStringState(row.status)));
+      $("#product-history tbody").append(tr);
     });
   }
 };
