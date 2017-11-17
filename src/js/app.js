@@ -75,8 +75,8 @@ App = {
     var filteredActors = $.grep(App.actors, function (x) {
       return x.type == App.actor.type + 1;
     });
+    $('#actor-list').empty();
     $(filteredActors).each(function () {
-      $('#actor-list').empty();
       $('<option>').val(this.address).text(this.name).appendTo('#actor-list');
     });
   },
