@@ -272,8 +272,8 @@ App = {
       case 3:
         type = "Retailer";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-success btn-sm');
-        actor_button.text('Set to Sold').button("refresh");
-        actor_button.attr('data-id',6);
+        actor_button.text('Set to In Stock').button("refresh");
+        actor_button.attr('data-id',5);
         package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
         break;
       default:

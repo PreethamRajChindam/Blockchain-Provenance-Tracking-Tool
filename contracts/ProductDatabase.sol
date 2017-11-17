@@ -17,12 +17,11 @@ contract ProductDatabase {
     }
 
     function addProduct(address _productRef, uint _status) public {
-        if (stored[_productRef]) {
-            revert();
+        if (!stored[_productRef]) {
+            products.push(_productRef);
+            stored[_productRef] = true;
+            OnAddProductEvent(_productRef, _status);
         }
-        products.push(_productRef);
-        stored[_productRef] = true;
-        OnAddProductEvent(_productRef, _status);
     }
 
     function getCount() public view returns (uint count) {
