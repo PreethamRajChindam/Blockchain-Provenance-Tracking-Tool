@@ -115,33 +115,16 @@ App = {
         return instance.getActor(account);
       }).then(function (actor) {
         App.productDatabase = actor[2];
-        App.actor = { type: actor[0].c[0], name: actor[1] };
+        App.actor = { type: actor[0].c[0], name: actor[1], stringType: App.getStringActorType(actor[0].c[0]) };
         if (App.productDatabase == "0x0000000000000000000000000000000000000000") {
           return;
         }
-        var type = "";
-        switch (actor[0].c[0]) {
-          case 0:
-            type = "Manufacturer";
-            break;
-          case 1:
-            type = "Shipper";
-            break;
-          case 2:
-            type = "Distributor";
-            break;
-          case 3:
-            type = "Retailer";
-            break;
-          default:
-            type = "";
-        }
-        if (type !== undefined) {
-          $("#welcome-message").text("Welcome " + actor[1] + "!, you are registered as " + type + ".");
+        if (App.actor.stringType !== undefined) {
+          $("#welcome-message").text("Welcome " + App.actor.name + "!, you are registered as " + App.actor.stringType + ".");
         }
         App.getProducts();
       }).catch(function (err) {
-        console.log("this the error", err.message);
+        console.log(err.message);
       });
     });
   },
@@ -258,6 +241,27 @@ App = {
         state = "Sold";
     }
     return state;
+  },
+
+  getStringActorType(data){
+    var type = "";
+    switch (data) {
+      case 0:
+        type = "Manufacturer";
+        break;
+      case 1:
+        type = "Shipper";
+        break;
+      case 2:
+        type = "Distributor";
+        break;
+      case 3:
+        type = "Retailer";
+        break;
+      default:
+        type = "";
+    }
+    return type;
   },
 
   addToProducts: function (address) {
