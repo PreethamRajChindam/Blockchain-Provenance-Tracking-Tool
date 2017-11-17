@@ -8,19 +8,21 @@ contract ProductDatabase {
     function ProductDatabase() public {}
 
     event OnAddProductEvent(
-        address _productRef
+        address _productRef,
+        uint indexed _status
     );
 
     function () public {
         revert();
     }
 
-    function addProduct(address _productRef) public {
+    function addProduct(address _productRef, uint _status) public {
         if (stored[_productRef]) {
             revert();
         }
         products.push(_productRef);
-        OnAddProductEvent(_productRef);
+        stored[_productRef] = true;
+        OnAddProductEvent(_productRef, _status);
     }
 
     function getCount() public view returns (uint count) {

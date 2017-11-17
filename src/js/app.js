@@ -81,22 +81,14 @@ App = {
   },
 
   getActors: function () {
-    var ci;
-    App.contracts.SupplyChainRegistry.deployed().then(instance => {
-      ci = instance;
-      return instance.getCount();
-    }).then(data => {
-      //get list of actors
-      for (i = 0; i < data.c[0]; i++) {
-        (function (x) {
-          ci.actorList(x).then(address => {
-            ci.getActor(address).then(actor => {
-              App.actors.push({ type: actor[0].c[0], name: actor[1], address: address });
-              App.refreshCombobox();
-            });
+    App.contracts.SupplyChainRegistry.deployed()
+    .then(function (instance) {
+      instance.AddActor({}, { fromBlock: 0, toBlock: 'latest' })
+        .get((error, result) => {
+          result.forEach(row => {
+            App.actors.push({ type: row.args._type.c[0], name: row.args._name, address: row.args._address });
           });
-        })(i);
-      }
+        });
     }).catch(function (err) {
       console.log(err.message);
     });
@@ -123,6 +115,7 @@ App = {
         }
         App.bindContractEvents();
         App.getProducts();
+        return App.refreshCombobox();
       }).catch(function (err) {
         console.log(err.message);
       });
