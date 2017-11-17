@@ -262,7 +262,11 @@ App = {
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
         actor_button.text('Set to Shipped').button("refresh");
         actor_button.attr('data-id',2);
-        package_button.text('Set to Shipping').addClass('btn btn-primary btn-sm').attr("id", "set-shipping").button("refresh");
+        // replace package button for shipping
+        package_button.remove();
+        var holder = $("#dynamic-button-holder");
+        var shipping_button = $('<button type="button" id="set-shipping" class="btn btn-info btn-sm">Set to Shipping</button>');
+        holder.append(shipping_button);
         break;
       case 2:
         type = "Distributor";
