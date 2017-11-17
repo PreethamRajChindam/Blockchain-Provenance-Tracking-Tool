@@ -136,3 +136,5 @@ span.input-group-addon i {
         transform: translateX(-50%);}
 
 #history-link:hover {cursor: pointer;}
+
+#actor-list {padding: 5px !important;}
