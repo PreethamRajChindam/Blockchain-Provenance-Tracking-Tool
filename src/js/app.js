@@ -52,7 +52,7 @@ App = {
   bindEvents: function () {
     $(document).on('click', '#btn-register', App.registerActor);
     $(document).on('click', '#btn-add-package', App.addProduct);
-    $(document).on('click', '#a-prod-history', App.getProductHistory);
+    $(document).on('click', '#a-prod-history', App.showProductHistory);
     $(document).on('click', '#btn-rts', App.changeProductState);
   },
 
@@ -218,6 +218,15 @@ App = {
     });
   },
 
+  showProductHistory: function(event){
+    var address = $(event.target).data('id');
+    var product = $.grep(App.products, function (p) {
+      return p.address === address;
+    });
+    App.drawHistoryTable(product[0].history);
+    $("#HistoryModal").modal("show");
+  },
+
   getStringState: function (data) {
     let state;
     switch (data) {
@@ -290,7 +299,7 @@ App = {
                 description: row.args._description,
                 timestamp: row.args._timestamp,
                 blocknumber: row.args._blockNumber,
-                staus: row.args._status
+                status: row.args._status
               });
               App.drawProductTable();
             });
@@ -316,6 +325,18 @@ App = {
       tr.append($("<td></td>").html(product.state));
       tr.append($("<td></td>").html(checkbox));
       $("#package-list tbody").append(tr);
+    });
+  },
+
+  drawHistoryTable: function (history) {
+    $("#product-history tbody").empty();
+    history.forEach(row => {
+      var tr = $('<tr></tr>');
+      tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(row.ref));
+      tr.append($("<td></td>").html(new Date(row.timestamp*1000)));
+      tr.append($("<td></td>").html(row.blocknumber));
+      tr.append($("<td></td>").html(row.status));
+      $("#product-history tbody").append(tr);
     });
   }
 };
