@@ -223,7 +223,7 @@ App = {
     var product = $.grep(App.products, function (p) {
       return p.address === address;
     });
-    App.drawHistoryTable(product[0].history);
+    App.drawHistoryTable(product[0]);
     $("#HistoryModal").modal("show");
   },
 
@@ -340,9 +340,11 @@ App = {
     });
   },
 
-  drawHistoryTable: function (history) {
+  drawHistoryTable: function (product) {
     $("#product-history tbody").empty();
-    history.forEach(row => {
+    $("#produt-history-name").html(product.name);
+    $("#produt-history-address").html(product.address);
+    product.history.forEach(row => {
       var tr = $('<tr></tr>');
       tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(row.ref));
       tr.append($("<td></td>").html(new Date(row.timestamp*1000)));
