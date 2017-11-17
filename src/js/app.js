@@ -40,12 +40,12 @@ App = {
         $.getJSON('Product.json', function (data) {
           App.contracts.Product = TruffleContract(data);
           App.contracts.Product.setProvider(App.web3Provider);
+          return App.getActor();
         });
+        return App.bindContractEvents();
       });
-      App.getActors();
-      return App.getActor();
+      return App.getActors();
     });
-
     return App.bindEvents();
   },
 
@@ -53,7 +53,19 @@ App = {
     $(document).on('click', '#btn-register', App.registerActor);
     $(document).on('click', '#btn-add-package', App.addProduct);
     $(document).on('click', '#a-prod-history', App.getProductHistory);
-    $(document).on('click', '#btn-rts', App.markAsRTS);
+    $(document).on('click', '#btn-rts', App.changeProductState);
+  },
+
+  bindContractEvents: function(){
+    App.contracts.ProductDatabase.at(App.productDatabase).then(function (instance) {
+      var event = instance.OnAddProductEvent();
+      event.watch(function (error, response) {
+        console.log(response);
+        App.getProducts();
+        $('#PackageModal').modal('hide');
+        event.stopWatching();
+      });
+    });
   },
 
   refreshCombobox: function () {
@@ -163,15 +175,6 @@ App = {
 
   addProduct: function (event) {
     event.preventDefault();
-    App.contracts.ProductDatabase.at(App.productDatabase).then(function (instance) {
-      var event = instance.OnAddProductEvent();
-      event.watch(function (error, response) {
-        console.log(response);
-        App.getProducts();
-        $('#PackageModal').modal('hide');
-        event.stopWatching();
-      });
-    });
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
@@ -203,24 +206,10 @@ App = {
     });
   },
 
-  getProductHistory: function (event) {
-    event.preventDefault();
-    var address = $(event.target).data('id');
-    var events = App.contracts.Product.at(address).then(product => {
-      const allEvents = product.allEvents({
-        fromBlock: 0,
-        toBlock: 'latest'
-      });
-      allEvents.watch((err, res) => {
-        console.log(err, res);
-        allEvents.stopWatching();
-      });
-    });
-  },
-
-  markAsRTS: function (event) {
+  changeProductState: function (event) {
     event.preventDefault();
     var products = $('input[name="myCheckbox"]:checked');
+    var statusId = parseInt($(event.target).data('id'));
     products.each(function (element) {
       var address = $(this).data('id');
       web3.eth.getAccounts(function (error, accounts) {
@@ -238,7 +227,7 @@ App = {
             allEvents.stopWatching();
           });
           var ref = $('select[name="actor-list"]').val();
-          return product.addAction("ready to ship", 1, ref, { from: account });
+          return product.addAction("", statusId, ref, { from: account });
         }).catch(function (err) {
           console.log(err.message);
         });
