@@ -297,12 +297,13 @@ App = {
               product.history.push({
                 ref: row.args._ref,
                 description: row.args._description,
-                timestamp: row.args._timestamp,
-                blocknumber: row.args._blockNumber,
-                status: row.args._status
+                timestamp: row.args._timestamp.c[0],
+                blocknumber: row.args._blockNumber.c[0],
+                status: row.args._status.c[0]
               });
               App.drawProductTable();
             });
+            console.log(App.products);
           });
       });
     }
@@ -335,7 +336,7 @@ App = {
       tr.append($("<td style='word-wrap: break-word; max-width: 250px;'></td>").html(row.ref));
       tr.append($("<td></td>").html(new Date(row.timestamp*1000)));
       tr.append($("<td></td>").html(row.blocknumber));
-      tr.append($("<td></td>").html(row.status));
+      tr.append($("<td></td>").html(App.getStringState(row.status)));
       $("#product-history tbody").append(tr);
     });
   }
