@@ -290,49 +290,50 @@ App = {
   },
 
   addToProducts: function (address) {
-    var exist = $.grep(App.products, function (p) {
-      return p.address === address;
-    });
-    if (exist.length === 0) {
-      var pInstance;
-      App.contracts.Product.at(address).then(instance => {
-        pInstance = instance;
-        return pInstance.getState();
-      }).then(data => {
-        var product = {
-          address: address,
-          state: App.getStringState(data[1].c[0]),
-          name: data[0],
-          holder: data[2],
-          history: []
-        };
-        App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
-          return instance.getActor(product.holder);
-        }).then(function (actor) {
-          product.holder=actor[1];
-        });
-        App.products.push(product);
-        pInstance.OnActionEvent({}, { fromBlock: 0, toBlock: 'latest' })
-          .get((error, result) => {
-            result.forEach(row => {
-              var history = {
-                ref: row.args._ref,
-                description: row.args._description,
-                timestamp: row.args._timestamp.c[0],
-                blocknumber: row.args._blockNumber.c[0],
-                status: row.args._status.c[0]
-              };
-              product.history.push(history);
-              App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
-                return instance.getActor(history.ref);
-              }).then(function (actor) {
-                history.ref=actor[1];
-                App.drawProductTable();
-              });
+    var pInstance;
+    App.contracts.Product.at(address).then(instance => {
+      pInstance = instance;
+      return pInstance.getState();
+    }).then(data => {
+      var exist = $.grep(App.products, function (p) {
+        return p.address === address;
+      });
+      if (exist.length !== 0) {
+        return;
+      }
+      var product = {
+        address: address,
+        state: App.getStringState(data[1].c[0]),
+        name: data[0],
+        holder: data[2],
+        history: []
+      };
+      App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+        return instance.getActor(product.holder);
+      }).then(function (actor) {
+        product.holder=actor[1];
+      });
+      App.products.push(product);
+      pInstance.OnActionEvent({}, { fromBlock: 0, toBlock: 'latest' })
+        .get((error, result) => {
+          result.forEach(row => {
+            var history = {
+              ref: row.args._ref,
+              description: row.args._description,
+              timestamp: row.args._timestamp.c[0],
+              blocknumber: row.args._blockNumber.c[0],
+              status: row.args._status.c[0]
+            };
+            product.history.push(history);
+            App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+              return instance.getActor(history.ref);
+            }).then(function (actor) {
+              history.ref=actor[1];
+              App.drawProductTable();
             });
           });
-      });
-    }
+        });
+    });
   },
 
   drawProductTable: function () {
