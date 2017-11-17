@@ -53,6 +53,7 @@ App = {
     $(document).on('click', '#btn-add-package', App.addProduct);
     $(document).on('click', '#a-prod-history', App.showProductHistory);
     $(document).on('click', '#btn-rts', App.changeProductState);
+    $(document).on('click', '#set-shipping', App.changeProductState);
   },
 
   bindContractEvents: function(){
@@ -236,7 +237,7 @@ App = {
         state = "Shipping";
         break;
       case 3:
-        state = "In Warehouse";
+        state = "Shipped";
         break;
       case 4:
         state = "In Transit To Retail";
@@ -261,11 +262,11 @@ App = {
         type = "Shipper";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
         actor_button.text('Set to Shipped').button("refresh");
-        actor_button.attr('data-id',2);
+        actor_button.attr('data-id',3);
         // replace package button for shipping
         package_button.remove();
         var holder = $("#dynamic-button-holder");
-        var shipping_button = $('<button type="button" id="set-shipping" class="btn btn-info btn-sm">Set to Shipping</button>');
+        var shipping_button = $('<button type="button" id="set-shipping" data-id="2" class="btn btn-info btn-sm">Set to Shipping</button>');
         holder.append(shipping_button);
         break;
       case 2:
