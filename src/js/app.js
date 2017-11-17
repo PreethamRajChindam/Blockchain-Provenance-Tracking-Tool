@@ -262,7 +262,7 @@ App = {
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
         actor_button.text('Set to Shipped').button("refresh");
         actor_button.attr('data-id',2);
-        package_button.text('Set to Shipping').addClass('btn btn-primary btn-sm').button("refresh");
+        package_button.text('Set to Shipping').addClass('btn btn-primary btn-sm').attr("id", "set-shipping").button("refresh");
         break;
       case 2:
         type = "Distributor";
