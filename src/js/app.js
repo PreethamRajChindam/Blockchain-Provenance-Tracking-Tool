@@ -264,18 +264,21 @@ App = {
         type = "Shipper";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
         actor_button.text('Set as Delivered').button("refresh");
+        actor_button.attr('data-id',2);
         package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
         break;
       case 2:
         type = "Distributor";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-primary btn-sm');
         actor_button.text('Set as Distributed').button("refresh");
+        actor_button.attr('data-id',4);
         package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
         break;
       case 3:
         type = "Retailer";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-success btn-sm');
         actor_button.text('Set as Sold').button("refresh");
+        actor_button.attr('data-id',6);
         package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
         break;
       default:
