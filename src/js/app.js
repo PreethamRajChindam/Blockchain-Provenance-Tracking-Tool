@@ -4,6 +4,7 @@ App = {
   productDatabase: null,
   actors: [],
   actor: null,
+  products: [],
 
   init: function () {
     return App.initWeb3();
@@ -107,18 +108,29 @@ App = {
           return;
         }
         var type = "";
+        var actor_button = $("#btn-rts");
+        var package_button = $("#add-package-button");
         switch (actor[0].c[0]) {
           case 0:
             type = "Manufacturer";
             break;
           case 1:
             type = "Shipper";
+            actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
+            actor_button.text('Set as Delivered').button("refresh");
+            package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
             break;
           case 2:
             type = "Distributor";
+            actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-primary btn-sm');
+            actor_button.text('Set as Distributed').button("refresh");
+            package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
             break;
           case 3:
             type = "Retailer";
+            actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-success btn-sm');
+            actor_button.text('Set as Sold').button("refresh");
+            package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
             break;
           default:
             type = "";
