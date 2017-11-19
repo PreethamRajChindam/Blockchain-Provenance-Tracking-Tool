@@ -61,7 +61,11 @@ App = {
       var event = instance.OnAddProductEvent();
       event.watch(function (error, response) {
         App.getProducts();
-        $('#PackageModal').modal('hide');
+        //{message: 'Hello World'},{type: 'danger'}
+        var notify = $.notify('New Product Added!');
+        setInterval(()=>{
+          notify.close();
+        },3000);
         event.stopWatching();
       });
     });
@@ -81,6 +85,7 @@ App = {
   },
 
   getActors: function () {
+    
     App.contracts.SupplyChainRegistry.deployed()
     .then(function (instance) {
       instance.AddActor({}, { fromBlock: 0, toBlock: 'latest' })
@@ -94,7 +99,7 @@ App = {
     });
   },
 
-  getActor: function (adopters, account) {
+  getActor: function () {
     //get current actor info
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
@@ -115,7 +120,6 @@ App = {
         }
         App.bindContractEvents();
         App.getProducts();
-        return App.refreshCombobox();
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -124,25 +128,23 @@ App = {
 
   registerActor: function (event) {
     event.preventDefault();
-
     var ci;
-
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
       }
-
       var account = accounts[0];
-
       App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
         ci = instance;
-
         // Execute adopt as a transaction by sending account
         var name = $("#name").val();
         var type = $("#type").val();
         return ci.registerActor(type, name, { from: account });
       }).then(function (result) {
-        return App.getActor();
+        $('#ActorModal').modal('hide');
+        setInterval(()=>{
+          App.getActor();
+        },3000);
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -155,15 +157,13 @@ App = {
       if (error) {
         console.log(error);
       }
-
       var account = accounts[0];
-
       App.contracts.ProductFactory.deployed().then(function (instance) {
         // Execute adopt as a transaction by sending account
         var name = $("#package").val();
         return instance.createProduct(name, { from: account });
       }).then(function (result) {
-
+        $('#PackageModal').modal('hide');
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -180,6 +180,7 @@ App = {
           });
         });
     });
+    App.refreshCombobox();
   },
 
   changeProductState: function (event) {
