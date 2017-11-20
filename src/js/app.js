@@ -53,6 +53,7 @@ App = {
     $(document).on('click', '#btn-add-package', App.addProduct);
     $(document).on('click', '#a-prod-history', App.showProductHistory);
     $(document).on('click', '#btn-rts', App.changeProductState);
+    $(document).on('click', '#set-shipping', App.changeProductState);
   },
 
   bindContractEvents: function(){
@@ -60,7 +61,11 @@ App = {
       var event = instance.OnAddProductEvent();
       event.watch(function (error, response) {
         App.getProducts();
-        $('#PackageModal').modal('hide');
+        //{message: 'Hello World'},{type: 'danger'}
+        var notify = $.notify('New Product Added!');
+        setInterval(()=>{
+          notify.close();
+        },3000);
         event.stopWatching();
       });
     });
@@ -80,28 +85,21 @@ App = {
   },
 
   getActors: function () {
-    var ci;
-    App.contracts.SupplyChainRegistry.deployed().then(instance => {
-      ci = instance;
-      return instance.getCount();
-    }).then(data => {
-      //get list of actors
-      for (i = 0; i < data.c[0]; i++) {
-        (function (x) {
-          ci.actorList(x).then(address => {
-            ci.getActor(address).then(actor => {
-              App.actors.push({ type: actor[0].c[0], name: actor[1], address: address });
-              App.refreshCombobox();
-            });
+    
+    App.contracts.SupplyChainRegistry.deployed()
+    .then(function (instance) {
+      instance.AddActor({}, { fromBlock: 0, toBlock: 'latest' })
+        .get((error, result) => {
+          result.forEach(row => {
+            App.actors.push({ type: row.args._type.c[0], name: row.args._name, address: row.args._address });
           });
-        })(i);
-      }
+        });
     }).catch(function (err) {
       console.log(err.message);
     });
   },
 
-  getActor: function (adopters, account) {
+  getActor: function () {
     //get current actor info
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
@@ -130,25 +128,23 @@ App = {
 
   registerActor: function (event) {
     event.preventDefault();
-
     var ci;
-
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
       }
-
       var account = accounts[0];
-
       App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
         ci = instance;
-
         // Execute adopt as a transaction by sending account
         var name = $("#name").val();
         var type = $("#type").val();
         return ci.registerActor(type, name, { from: account });
       }).then(function (result) {
-        return App.getActor();
+        $('#ActorModal').modal('hide');
+        setInterval(()=>{
+          App.getActor();
+        },3000);
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -161,15 +157,13 @@ App = {
       if (error) {
         console.log(error);
       }
-
       var account = accounts[0];
-
       App.contracts.ProductFactory.deployed().then(function (instance) {
         // Execute adopt as a transaction by sending account
         var name = $("#package").val();
         return instance.createProduct(name, { from: account });
       }).then(function (result) {
-
+        $('#PackageModal').modal('hide');
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -186,6 +180,7 @@ App = {
           });
         });
     });
+    App.refreshCombobox();
   },
 
   changeProductState: function (event) {
@@ -236,7 +231,7 @@ App = {
         state = "Shipping";
         break;
       case 3:
-        state = "In Warehouse";
+        state = "Shipped";
         break;
       case 4:
         state = "In Transit To Retail";
@@ -261,11 +256,11 @@ App = {
         type = "Shipper";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-info btn-sm');
         actor_button.text('Set to Shipped').button("refresh");
-        actor_button.attr('data-id',2);
+        actor_button.attr('data-id',3);
         // replace package button for shipping
         package_button.remove();
         var holder = $("#dynamic-button-holder");
-        var shipping_button = $('<button type="button" id="set-shipping" class="btn btn-primary btn-sm">Set to Shipping</button>');
+        var shipping_button = $('<button type="button" id="set-shipping" data-id="2" class="btn btn-info btn-sm">Set to Shipping</button>');
         holder.append(shipping_button);
         break;
       case 2:
@@ -278,8 +273,8 @@ App = {
       case 3:
         type = "Retailer";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-success btn-sm');
-        actor_button.text('Set to Sold').button("refresh");
-        actor_button.attr('data-id',6);
+        actor_button.text('Set to In Stock').button("refresh");
+        actor_button.attr('data-id',5);
         package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
         break;
       default:
@@ -289,49 +284,50 @@ App = {
   },
 
   addToProducts: function (address) {
-    var exist = $.grep(App.products, function (p) {
-      return p.address === address;
-    });
-    if (exist.length === 0) {
-      var pInstance;
-      App.contracts.Product.at(address).then(instance => {
-        pInstance = instance;
-        return pInstance.getState();
-      }).then(data => {
-        var product = {
-          address: address,
-          state: App.getStringState(data[1].c[0]),
-          name: data[0],
-          holder: data[2],
-          history: []
-        };
-        App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
-          return instance.getActor(product.holder);
-        }).then(function (actor) {
-          product.holder=actor[1];
-        });
-        App.products.push(product);
-        pInstance.OnActionEvent({}, { fromBlock: 0, toBlock: 'latest' })
-          .get((error, result) => {
-            result.forEach(row => {
-              var history = {
-                ref: row.args._ref,
-                description: row.args._description,
-                timestamp: row.args._timestamp.c[0],
-                blocknumber: row.args._blockNumber.c[0],
-                status: row.args._status.c[0]
-              };
-              product.history.push(history);
-              App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
-                return instance.getActor(history.ref);
-              }).then(function (actor) {
-                history.ref=actor[1];
-                App.drawProductTable();
-              });
+    var pInstance;
+    App.contracts.Product.at(address).then(instance => {
+      pInstance = instance;
+      return pInstance.getState();
+    }).then(data => {
+      var exist = $.grep(App.products, function (p) {
+        return p.address === address;
+      });
+      if (exist.length !== 0) {
+        return;
+      }
+      var product = {
+        address: address,
+        state: App.getStringState(data[1].c[0]),
+        name: data[0],
+        holder: data[2],
+        history: []
+      };
+      App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+        return instance.getActor(product.holder);
+      }).then(function (actor) {
+        product.holder=actor[1];
+      });
+      App.products.push(product);
+      pInstance.OnActionEvent({}, { fromBlock: 0, toBlock: 'latest' })
+        .get((error, result) => {
+          result.forEach(row => {
+            var history = {
+              ref: row.args._ref,
+              description: row.args._description,
+              timestamp: row.args._timestamp.c[0],
+              blocknumber: row.args._blockNumber.c[0],
+              status: row.args._status.c[0]
+            };
+            product.history.push(history);
+            App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
+              return instance.getActor(history.ref);
+            }).then(function (actor) {
+              history.ref=actor[1];
+              App.drawProductTable();
             });
           });
-      });
-    }
+        });
+    });
   },
 
   drawProductTable: function () {

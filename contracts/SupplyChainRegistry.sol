@@ -12,6 +12,12 @@ contract SupplyChainRegistry {
         address productDatabase;
     }
 
+    event AddActor(
+        address _address,
+        ActorType _type,
+        string _name
+    );
+
     mapping (address => Actor) actors;
     address[] public actorList;
 
@@ -19,6 +25,7 @@ contract SupplyChainRegistry {
         ProductDatabase pdb = new ProductDatabase();
         actors[msg.sender] = Actor(_type, _name, pdb);
         actorList.push(msg.sender);
+        AddActor(msg.sender, _type, _name);
     }
 
     function getActor(address _address) public view returns (ActorType, string, address) {

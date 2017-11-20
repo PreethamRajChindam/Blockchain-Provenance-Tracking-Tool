@@ -34,11 +34,11 @@ contract Product {
     }
 
     function addAction(string _description, Status _status, address _ref) public {
-        require(currentStatus != _status);
+        require(int(_status)-int(currentStatus) == 1);
         require(msg.sender != _ref);
-        OnActionEvent(_ref, _description, now, block.number, _status);
         currentStatus = _status;
         currentHolder = _ref;
+        OnActionEvent(_ref, _description, now, block.number, _status);
         addProductToDatabase(_ref);
     }
 
@@ -50,6 +50,6 @@ contract Product {
         SupplyChainRegistry scRegistry = SupplyChainRegistry(REGISTRY);
         address productDB = scRegistry.getActorDatabase(_ref);
         ProductDatabase database = ProductDatabase(productDB);
-        database.addProduct(this);
+        database.addProduct(this,uint(currentStatus));
     }
 }
