@@ -61,7 +61,11 @@ App = {
       var event = instance.OnAddProductEvent();
       event.watch(function (error, response) {
         App.getProducts();
-        $('#PackageModal').modal('hide');
+        //{message: 'Hello World'},{type: 'danger'}
+        var notify = $.notify('New Product Added!');
+        setInterval(()=>{
+          notify.close();
+        },3000);
         event.stopWatching();
       });
     });
@@ -81,28 +85,21 @@ App = {
   },
 
   getActors: function () {
-    var ci;
-    App.contracts.SupplyChainRegistry.deployed().then(instance => {
-      ci = instance;
-      return instance.getCount();
-    }).then(data => {
-      //get list of actors
-      for (i = 0; i < data.c[0]; i++) {
-        (function (x) {
-          ci.actorList(x).then(address => {
-            ci.getActor(address).then(actor => {
-              App.actors.push({ type: actor[0].c[0], name: actor[1], address: address });
-              App.refreshCombobox();
-            });
+    
+    App.contracts.SupplyChainRegistry.deployed()
+    .then(function (instance) {
+      instance.AddActor({}, { fromBlock: 0, toBlock: 'latest' })
+        .get((error, result) => {
+          result.forEach(row => {
+            App.actors.push({ type: row.args._type.c[0], name: row.args._name, address: row.args._address });
           });
-        })(i);
-      }
+        });
     }).catch(function (err) {
       console.log(err.message);
     });
   },
 
-  getActor: function (adopters, account) {
+  getActor: function () {
     //get current actor info
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
@@ -131,25 +128,23 @@ App = {
 
   registerActor: function (event) {
     event.preventDefault();
-
     var ci;
-
     web3.eth.getAccounts(function (error, accounts) {
       if (error) {
         console.log(error);
       }
-
       var account = accounts[0];
-
       App.contracts.SupplyChainRegistry.deployed().then(function (instance) {
         ci = instance;
-
         // Execute adopt as a transaction by sending account
         var name = $("#name").val();
         var type = $("#type").val();
         return ci.registerActor(type, name, { from: account });
       }).then(function (result) {
-        return App.getActor();
+        $('#ActorModal').modal('hide');
+        setInterval(()=>{
+          App.getActor();
+        },3000);
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -162,15 +157,13 @@ App = {
       if (error) {
         console.log(error);
       }
-
       var account = accounts[0];
-
       App.contracts.ProductFactory.deployed().then(function (instance) {
         // Execute adopt as a transaction by sending account
         var name = $("#package").val();
         return instance.createProduct(name, { from: account });
       }).then(function (result) {
-
+        $('#PackageModal').modal('hide');
       }).catch(function (err) {
         console.log(err.message);
       });
@@ -187,6 +180,7 @@ App = {
           });
         });
     });
+    App.refreshCombobox();
   },
 
   changeProductState: function (event) {
@@ -279,8 +273,8 @@ App = {
       case 3:
         type = "Retailer";
         actor_button.removeClass('btn btn-warning btn-sm').addClass('btn btn-success btn-sm');
-        actor_button.text('Set to Sold').button("refresh");
-        actor_button.attr('data-id',6);
+        actor_button.text('Set to In Stock').button("refresh");
+        actor_button.attr('data-id',5);
         package_button.attr("disabled","disabled").attr('title', 'Only Manufacturers can add new packages to the system.');
         break;
       default:
